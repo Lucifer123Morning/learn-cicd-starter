@@ -5,9 +5,10 @@ import (
 	"embed"
 	"io"
 	"log"
-	"time"
 	"net/http"
 	"os"
+	"strconv"
+	"time"
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/cors"
@@ -88,16 +89,16 @@ func main() {
 
 	router.Mount("/v1", v1Router)
 	srv := &http.Server{
-        Addr:              ":" + port,
-        Handler:           router,
-        ReadHeaderTimeout: 5 * time.Second,
-    }
+		Addr:              ":" + port,
+		Handler:           router,
+		ReadHeaderTimeout: 5 * time.Second,
+	}
 
 	p, err := strconv.Atoi(port)
-    if err != nil {
-        log.Fatal(err)
-    }
+	if err != nil {
+		log.Fatal(err)
+	}
 
-    log.Printf("Serving on port: %d\n", p)
+	log.Printf("Serving on port: %d\n", p)
 	log.Fatal(srv.ListenAndServe())
 }
